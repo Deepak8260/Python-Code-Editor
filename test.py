@@ -1,3 +1,4 @@
+import sys
 import subprocess
 from flask import Flask, render_template, request
 
@@ -12,11 +13,11 @@ def index():
         user_input = request.form.get("user_input", "")  # Get user input from form
 
         try:
-            # Run the code using subprocess.Popen to support input
+            # Use sys.executable to get the current Python interpreter path
             process = subprocess.Popen(
-                [r"C:\Python313\python.exe", "-c", code],  # Change to your Python path
+                [sys.executable, "-c", code],
                 text=True,
-                stdin=subprocess.PIPE,  # Enable input
+                stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE
             )

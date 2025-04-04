@@ -8,10 +8,16 @@ body {
 
 h1 {
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 10px;  /* Reduced margin */
-    font-size: 2.5em;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    color: #61dafb;  /* Modern blue color similar to React's logo */
+    margin: 10px 0;
+    font-size: 2.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #61dafb, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
 }
 
 body {
@@ -62,7 +68,7 @@ pre {
 
 button { 
     position: absolute;
-    top: 10px;
+    top: -7px;
     right: 20px;
     margin: 0;
     z-index: 1;
@@ -103,9 +109,27 @@ textarea:focus {
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
+.output-header {
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 15px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.input-label {
+    margin-top: -5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    color: #333;
+}
+
 .input-container {
-    margin: 15px 0;
-    width: 100%;
+    margin: 10px 0;
 }
 
 input { 

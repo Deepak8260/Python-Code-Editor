@@ -12,17 +12,21 @@
     <div class="container">
         <div class="editor-section">
             <form method="POST" id="code-form">
-                <label><b>Enter Python Code:</b></label><br>
+                <div class="editor-header">
+                    <label>Enter Python Code:</label>
+                    <button type="submit" class="run-button">Run Code</button>
+                </div>
                 <textarea name="code" placeholder="Write your Python code here...">{{ request.form.get('code', 'print("Hello, World!")') }}</textarea>
-                <button type="submit">Run Code</button>
             </form>
         </div>
 
         <div class="output-section">
-            <h2>Output:</h2>
+            <div class="output-header">
+                <h2>Output:</h2>
+            </div>
             {% if "input(" in request.form.get('code', '') %}
             <div class="input-container">
-                <label><b>Enter Input:</b></label>
+                <label class="input-label">Enter Input:</label>
                 <input type="text" name="user_input" form="code-form" placeholder="Enter input values here..." value="{{ request.form.get('user_input', '') }}">
             </div>
             {% endif %}
