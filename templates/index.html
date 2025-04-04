@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Online Editor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
+</head>
+<body>
+    <h1>Python Online Editor</h1>
+    
+    <div class="container">
+        <div class="editor-section">
+            <form method="POST" id="code-form">
+                <label><b>Enter Python Code:</b></label><br>
+                <textarea name="code" placeholder="Write your Python code here...">{{ request.form.get('code', 'print("Hello, World!")') }}</textarea>
+                <button type="submit">Run Code</button>
+            </form>
+        </div>
+
+        <div class="output-section">
+            <h2>Output:</h2>
+            {% if "input(" in request.form.get('code', '') %}
+            <div class="input-container">
+                <label><b>Enter Input:</b></label>
+                <input type="text" name="user_input" form="code-form" placeholder="Enter input values here..." value="{{ request.form.get('user_input', '') }}">
+            </div>
+            {% endif %}
+            <pre>{{ output if output else "Your code output will appear here..." }}</pre>
+        </div>
+    </div>
+</body>
+</html>
