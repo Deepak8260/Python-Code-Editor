@@ -23,18 +23,19 @@ body {
 
 .container {
     display: flex;
-    gap: 0;
+    gap: 8px;
     height: 100vh;
-    max-width: 100%;
-    margin: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 10px;
 }
 
 .editor-section, .output-section {
     flex: 1;
-    padding: 0;
-    border-radius: 0;
+    padding: 10px;
+    border-radius: 4px;
     background: #1e1e1e;
-    box-shadow: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -44,18 +45,14 @@ body {
 textarea { 
     width: 100%;
     height: 100%;
-    padding: 15px;
-    padding-top: 50px;
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-    border: none;
+    padding: 10px;
+    padding-top: 45px;
+    font-size: 15px;
+    line-height: 1.4;
 }
 
 pre { 
-    height: 100%;
-    background: #1e1e1e;
-    color: #d4d4d4;
-    padding: 15px;
+    padding: 10px;
     border-left: 1px solid #333;
 }
 
