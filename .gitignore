@@ -1,0 +1,18 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+env/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Flask
+instance/
+
+# Windows
+desktop.ini
+Thumbs.db
