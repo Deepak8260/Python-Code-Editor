@@ -1,5 +1,6 @@
 import subprocess
 import sys
+from vercel import Response
 
 
 def handler(request):
@@ -12,7 +13,7 @@ def handler(request):
     user_input = payload.get("user_input", "")
 
     if not code:
-        return {"output": "Error: No Python code was submitted."}, 400
+        return Response({"output": "Error: No Python code was submitted."}, status=400)
 
     try:
         process = subprocess.Popen(
@@ -31,4 +32,4 @@ def handler(request):
     except Exception as exc:
         output = f"Error: {exc}"
 
-    return {"output": output}
+    return Response({"output": output})

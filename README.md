@@ -21,14 +21,32 @@ This repository now contains a static frontend and a Vercel-compatible Python AP
 
 ## Running Locally
 
-Because the frontend is static and the backend is a serverless function, local execution is easiest using Vercel CLI:
+This project is easiest to run locally with the Vercel CLI because the backend is a serverless API function.
+
+1. Install Vercel CLI if you do not already have it:
 
 ```bash
 npm install -g vercel
+```
+
+2. From the project root, start the local Vercel development server:
+
+```bash
 vercel dev
 ```
 
-If you do not have Vercel CLI installed, you can still preview the static frontend with a local HTTP server, but the API endpoint will run only in Vercel's environment.
+3. Open the URL shown in the terminal, usually:
+
+```bash
+http://127.0.0.1:3000
+```
+
+4. In the browser, use the editor and click Run. The `/api/run` endpoint is served locally by Vercel.
+
+### Notes
+
+- You do not need to install any Python dependencies manually for this app.
+- If you want to run only the static frontend without the backend, you can open `index.html` directly in a browser, but `/api/run` will not work outside Vercel development.
 
 ## Deployment on Vercel
 
