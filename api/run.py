@@ -1,11 +1,10 @@
 import subprocess
 import sys
-from vercel import Response
 
 
 def handler(request):
     try:
-        payload = request.get_json() or {}
+        payload = request.get_json(silent=True) or {}
     except Exception:
         payload = {}
 
@@ -13,7 +12,7 @@ def handler(request):
     user_input = payload.get("user_input", "")
 
     if not code:
-        return Response({"output": "Error: No Python code was submitted."}, status=400)
+        return {"output": "Error: No Python code was submitted."}
 
     try:
         process = subprocess.Popen(
@@ -32,4 +31,4 @@ def handler(request):
     except Exception as exc:
         output = f"Error: {exc}"
 
-    return Response({"output": output})
+    return {"output": output}
