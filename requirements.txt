@@ -1,3 +1,2 @@
-Flask
-google-generativeai
-gunicorn
+# No external Python dependencies are required for the Vercel serverless function.
+# The Vercel Python runtime will handle the API endpoint.

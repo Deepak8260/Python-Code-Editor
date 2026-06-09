@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Code Editor</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <h1>Python Code Editor</h1>
+            <p>Write and execute Python code in your browser with a Vercel-deployable backend.</p>
+        </div>
+        <div class="top-actions">
+            <span class="badge">Python 3</span>
+            <span class="badge">Serverless API</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="editor-section">
+            <form id="code-form">
+                <div class="panel-header">
+                    <div>
+                        <h2>Python editor</h2>
+                        <p>Paste your code below, add standard input if needed, then click Run.</p>
+                    </div>
+                    <button type="submit" class="run-button">Run Code</button>
+                </div>
+
+                <label for="code">Code</label>
+                <textarea id="code" name="code" rows="14"></textarea>
+
+                <div class="supported-libs">
+                    <strong>Available libraries:</strong>
+                    <span id="supported-libs"></span>
+                </div>
+
+                <div class="input-container">
+                    <label for="user_input">Keyboard input</label>
+                    <textarea id="user_input" name="user_input" rows="4" placeholder="Enter stdin values here..."></textarea>
+                </div>
+            </form>
+        </section>
+
+        <section class="output-section">
+            <div class="panel-header">
+                <div>
+                    <h2>Output</h2>
+                    <p>Results from the last execution appear below.</p>
+                </div>
+            </div>
+            <pre id="output">Your code output will appear here...</pre>
+        </section>
+    </main>
+
+    <footer class="footer-note">
+        <p>Warning: This demo executes code on the server. Only run trusted code in production environments.</p>
+    </footer>
+
+    <script>
+        const supportedLibs = [
+            "numpy",
+            "pandas",
+            "matplotlib",
+            "seaborn",
+            "plotly",
+            "scikit-learn",
+            "langchain",
+            "openai",
+            "google-generativeai",
+            "rich",
+            "sqlalchemy",
+            "pillow",
+            "requests",
+            "python-dotenv",
+        ];
+
+        const defaultCode = `import pandas as pd
+import numpy as np
+
+# Example: create a DataFrame and print summary
+pdf = pd.DataFrame({
+    'x': np.linspace(0, 10, 5),
+    'y': np.random.randn(5)
+})
+print(pdf)
+print('\nSummary:')
+print(pdf.describe())`;
+
+        const codeElement = document.getElementById("code");
+        const outputElement = document.getElementById("output");
+        const supportedLibsElement = document.getElementById("supported-libs");
+        const form = document.getElementById("code-form");
+        const userInputElement = document.getElementById("user_input");
+
+        codeElement.value = defaultCode;
+        supportedLibsElement.textContent = supportedLibs.join(", ");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            outputElement.textContent = "Running...";
+
+            const payload = {
+                code: codeElement.value,
+                user_input: userInputElement.value,
+            };
+
+            try {
+                const response = await fetch("/api/run", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) {
+                    const error = await response.text();
+                    outputElement.textContent = `Request error: ${error}`;
+                    return;
+                }
+
+                const data = await response.json();
+                outputElement.textContent = data.output || "No output returned.";
+            } catch (error) {
+                outputElement.textContent = `Network error: ${error}`;
+            }
+        });
+    </script>
+</body>
+</html>
