@@ -32,3 +32,9 @@ def handler(request):
         output = f"Error: {exc}"
 
     return {"output": output}
+
+
+# Vercel Python requires a top-level exported entrypoint name.
+# Explicit aliases help ensure the runtime detects the function.
+app = handler
+application = handler
