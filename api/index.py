@@ -1,18 +1,33 @@
+import json
 import subprocess
 import sys
+from vercel import Response
 
 
 def handler(request):
-    try:
-        payload = request.get_json(silent=True) or {}
-    except Exception:
-        payload = {}
+    payload = {}
 
-    code = payload.get("code", "").strip()
-    user_input = payload.get("user_input", "")
+    if hasattr(request, "get_json"):
+        try:
+            payload = request.get_json(silent=True) or {}
+        except Exception:
+            payload = {}
+    elif hasattr(request, "json"):
+        try:
+            payload = request.json or {}
+        except Exception:
+            payload = {}
+    else:
+        try:
+            payload = json.loads(request.body or b"{}")
+        except Exception:
+            payload = {}
+
+    code = str(payload.get("code", "")).strip()
+    user_input = str(payload.get("user_input", ""))
 
     if not code:
-        return {"output": "Error: No Python code was submitted."}
+        return Response(json.dumps({"output": "Error: No Python code was submitted."}), status=400, headers={"Content-Type": "application/json"})
 
     try:
         process = subprocess.Popen(
@@ -22,7 +37,6 @@ def handler(request):
             stderr=subprocess.PIPE,
             text=True,
         )
-
         output, error = process.communicate(input=user_input, timeout=10)
         output = output.strip() or error.strip() or "Program finished with no output."
     except subprocess.TimeoutExpired:
@@ -31,10 +45,8 @@ def handler(request):
     except Exception as exc:
         output = f"Error: {exc}"
 
-    return {"output": output}
+    return Response(json.dumps({"output": output}), headers={"Content-Type": "application/json"})
 
 
-# Vercel Python requires a top-level exported entrypoint name.
-# Explicit aliases help ensure the runtime detects the function.
 app = handler
 application = handler
